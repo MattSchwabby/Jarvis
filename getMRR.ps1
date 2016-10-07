@@ -100,6 +100,7 @@ function getMRR
         #Calculate MRR
         $mrr = $invoiceData.totalamount | measure-object -sum
         $mrr = $mrr.sum
+        $mrr = "{0:N0}" -f $mrr
 
         #calculate MRR by DC
         $total = 0

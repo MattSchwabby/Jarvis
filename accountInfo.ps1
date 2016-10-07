@@ -109,6 +109,7 @@ function accountInfo
         # Calculate MRR
         $mrr = $invoiceData.totalamount | measure-object -sum
         $mrr = $mrr.sum
+         $mrr = "{0:N0}" -f $mrr
         
         # Count sub accounts
         $subs = $allAliases | measure-object
