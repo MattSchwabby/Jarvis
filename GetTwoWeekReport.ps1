@@ -185,16 +185,16 @@ function getTwoWeekReport
    
                 $thisrow = New-object system.object
                 $thisrow | Add-Member -MemberType NoteProperty -Name "Server Name" -Value $i.name 
-                $thisrow | Add-Member -MemberType NoteProperty -Name "Date & Time" -Value $i.stats.timestamp
-                $thisrow | Add-Member -MemberType NoteProperty -Name "CPUAmount" -Value $i.stats.cpu
-                $thisrow | Add-Member -MemberType NoteProperty -Name "CPUUtil" -Value $i.stats.cpuPercent
-                $thisrow | Add-Member -MemberType NoteProperty -Name "MemoryMB" -Value $i.stats.memoryMB
-                $thisrow | Add-Member -MemberType NoteProperty -Name "MemoryUtil" -Value $i.stats.memoryPercent
+                $thisrow | Add-Member -MemberType NoteProperty -Name "Date & Time" -Value $i.stats.timestamp[0]
+                $thisrow | Add-Member -MemberType NoteProperty -Name "CPUAmount" -Value $i.stats.cpu[0]
+                $thisrow | Add-Member -MemberType NoteProperty -Name "CPUUtil" -Value $i.stats.cpuPercent[0]
+                $thisrow | Add-Member -MemberType NoteProperty -Name "MemoryMB" -Value $i.stats.memoryMB[0]
+                $thisrow | Add-Member -MemberType NoteProperty -Name "MemoryUtil" -Value $i.stats.memoryPercent[0]
                 $thisrow | Add-Member -MemberType NoteProperty -Name "Storage" -Value $totalstorageCapacity
-                $thisrow | Add-Member -MemberType NoteProperty -Name "networkReceivedKbps" -Value $i.stats.networkReceivedKbps
-                $thisrow | Add-Member -MemberType NoteProperty -Name "networkTransmittedKbps" -Value $i.stats.networkTransmittedKbps
-                $thisrow | Add-Member -MemberType NoteProperty -Name "predictedTransmittedMB" -Value (($i.stats.networkTransmittedKbps * 0.0001220703125) * 86400)
-                $thisrow | Add-Member -MemberType NoteProperty -Name "predictedReceivedMB" -Value (($i.stats.networkReceivedKbps * 0.0001220703125) * 86400)
+                $thisrow | Add-Member -MemberType NoteProperty -Name "networkReceivedKbps" -Value $i.stats.networkReceivedKbps[0]
+                $thisrow | Add-Member -MemberType NoteProperty -Name "networkTransmittedKbps" -Value $i.stats.networkTransmittedKbps[0]
+                $thisrow | Add-Member -MemberType NoteProperty -Name "predictedTransmittedMB" -Value (($i.stats.networkTransmittedKbps[0] * 0.0001220703125) * 86400)
+                $thisrow | Add-Member -MemberType NoteProperty -Name "predictedReceivedMB" -Value (($i.stats.networkReceivedKbps[0] * 0.0001220703125) * 86400)
 
           if ($totalstorageusage -eq $null)
           {
