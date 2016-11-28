@@ -134,15 +134,15 @@ Example
                     #        $availability += $($thisAvailability.available)
                     #        $total += $($thisAvailability.total)
                     $thisAvailability = $thisAvailability[0]
-                    if($($config.alias))
+
+                    if($($config.alias) -ne "Bare Metal Small" -and $($config.alias) -ne "Bare Metal Medium" -and $($config.alias) -ne "Bare Metal Large")
                     {
-                        
                     }
                     else
                     {
-                        $config.alias = "Unnamed SKU"
+                        $stringout += "*$($dc)* | *$($config.alias)* | $($config.vendor) $($config.model) | RAM: $($config.memory_capacity_gb) GB - CPUs: $($($config.cpu_sockets) * $($config.cpu_cps)) | Available: *$($thisAvailability.available)* | Total:  $($thisAvailability.total)   `n"
                     }
-                    $stringout += "*$($dc)* | *$($config.alias)* | $($config.vendor) $($config.model) | RAM: $($config.memory_capacity_gb) GB - CPUs: $($config.cpu_cps) | Available: *$($thisAvailability.available)* | Total:  $($thisAvailability.total)   `n"
+
                 } # end try
                 catch
                 {
