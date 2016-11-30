@@ -135,7 +135,11 @@ Example
                     #        $total += $($thisAvailability.total)
                     $thisAvailability = $thisAvailability[0]
 
-                    if($($config.alias) -ne "Bare Metal Small" -and $($config.alias) -ne "Bare Metal Medium" -and $($config.alias) -ne "Bare Metal Large")
+                    <# ======================================================
+                    EDIT THE FOLLOWING IF STATEMENT IF ANY NEW SKUS ARE ADDED
+                    ======================================================= #>
+
+                    if($($config.alias) -ne "Bare Metal Small" -and $($config.alias) -ne "Bare Metal Medium" -and $($config.alias) -ne "Bare Metal Large" -and $($config.alias) -ne "Bare Metal Big Data" -and $($config.alias) -ne "Bare Metal SSD" -and $($config.alias) -ne "Bare Metal Large Storage" -and $($config.alias) -ne "Bare Metal High Memory" -and $($config.alias) -ne "Bare Metal SSD Small")
                     {
                     }
                     else
