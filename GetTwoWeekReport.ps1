@@ -405,9 +405,9 @@ function getTwoWeekReport
             $global:session = $session
 
             #email the spreadsheet
-            $User = "MSCH1-relay@t3mx.com"
-            $SmtpServer = "relay.t3mx.com"
-            $EmailFrom = "CenturyLink Cloud Two Week Utilization Report for $Accountalias <MSCH1-relay@t3mx.com>"
+            $User = 'a175c1c3db8f444804331808510f6456'
+            $SmtpServer = "in-v3.mailjet.com"
+            $EmailFrom = "Jarvis SMTP Relay - PLEASE DO NOT REPLY <matt.schwabenbauer@ctl.io>"
             $EmailTo = "<$email>"
             $PWord = loginCLCSMTP
             $Credential = New-Object –TypeName System.Management.Automation.PSCredential –ArgumentList $User, $PWord
