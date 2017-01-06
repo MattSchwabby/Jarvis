@@ -47,7 +47,8 @@ function getInvoice
         }
 
         $currentMonth = Get-Date -UFormat %m
-        if ($month -eq $currentMonth)
+        $currentYear = Get-Date -Uformat %Y
+        if ($month -eq $currentMonth -and $year -eq $currentYear)
         {
             $errorcode = 7
             stop
