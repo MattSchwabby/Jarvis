@@ -368,7 +368,7 @@ function getInventory
         #email the spreadsheet
         $User = 'a175c1c3db8f444804331808510f6456'
         $SmtpServer = "in-v3.mailjet.com"
-        $EmailFrom = "Jarvis SMTP Relay - PLEASE DO NOT REPLY <matt.schwabenbauer@ctl.io>"
+        $EmailFrom = "Jarvis <jarvis@ctl.io>"
         $EmailTo = "<$email>"
         $PWord = loginCLCSMTP
         $Credential = New-Object –TypeName System.Management.Automation.PSCredential –ArgumentList $User, $PWord
@@ -404,24 +404,7 @@ function getInventory
     
 
     dir $filename | Remove-Item -Force
-        try
-    {
-    #increment analytics data
-    $thisFunction = "GetInventory"
-    $analyticsDir = 'C:\Users\Administrator\Box Sync\Matt\jarvis\analytics\totalCalls.csv'
-    $totalCalls = import-csv $analyticsDir
-    $increment = $totalCalls | select-object | Where-Object {$_.call -eq $thisFunction}
-    $increase = [int]$increment.count + 1
-    $thisrow = New-object System.Object
-    $thisrow | Add-Member -MemberType NoteProperty -name "count" -value $increase
-    $thisrow | Add-Member -MemberType NoteProperty -name "call" -value $thisFunction
-    $filter = $totalCalls | select-object | where-object {$_.call -ne $thisFunction}
-    $filter += $thisrow
-    $filter | export-csv $analyticsDir -NoTypeInformation
-    }
-    catch
-    {
-    }
+
         # Return the result and conver it to json
     return $result | ConvertTo-Json
 }

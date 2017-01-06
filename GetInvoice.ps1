@@ -170,7 +170,7 @@ function getInvoice
         # Email the spreadsheet
         $User = 'a175c1c3db8f444804331808510f6456'
         $SmtpServer = "in-v3.mailjet.com"
-        $EmailFrom = "Jarvis SMTP Relay - PLEASE DO NOT REPLY <matt.schwabenbauer@ctl.io>"
+        $EmailFrom = "Jarvis <jarvis@ctl.io>"
         $EmailTo = "<$email>"
         $PWord = loginCLCSMTP
         $Credential = New-Object –TypeName System.Management.Automation.PSCredential –ArgumentList $User, $PWord

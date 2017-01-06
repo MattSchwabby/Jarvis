@@ -121,6 +121,10 @@ function getTwoWeekReport
 
         <# Begin main script #>
 
+        # Variable to store temp file names for later deletion
+        
+        $tempFiles = @()
+
         <# Get server metrics for past 13 days #>
 
         $day = 0
@@ -140,6 +144,8 @@ function getTwoWeekReport
 
         $theserows = @()
 
+
+
         # Foreach loop to get the server metrics data from the API
 
         Foreach ($alias in $aliases)
@@ -147,6 +153,7 @@ function getTwoWeekReport
             $response = $null
             $thisalias = $alias.AccountAlias
             $temp1 = "$dir\$thisalias-temp1-$gendate-$day.csv"
+            $tempFiles += $temp1
              Foreach ($i in $datacenterList)
             {
                 $JSON = @{AccountAlias = $thisalias; Location = $i} | ConvertTo-Json 
@@ -407,7 +414,7 @@ function getTwoWeekReport
             #email the spreadsheet
             $User = 'a175c1c3db8f444804331808510f6456'
             $SmtpServer = "in-v3.mailjet.com"
-            $EmailFrom = "Jarvis SMTP Relay - PLEASE DO NOT REPLY <matt.schwabenbauer@ctl.io>"
+            $EmailFrom = "Jarvis <jarvis@ctl.io>"
             $EmailTo = "<$email>"
             $PWord = loginCLCSMTP
             $Credential = New-Object –TypeName System.Management.Automation.PSCredential –ArgumentList $User, $PWord
@@ -461,11 +468,25 @@ Summary:
         $result.success = $false
     }
 
+    # Delete temp files
+
     dir $filename | Remove-Item -force
+    dir $filename2 | Remove-Item -force
+    dir $filename3 | Remove-Item -force
+    dir $filename4 | Remove-Item -force
+    dir $filename5 | Remove-Item -force
+    dir $filename6 | Remove-Item -force
+    dir $filename7 | Remove-Item -force
+    dir $filename8 | Remove-Item -force
     dir $groupfilename | Remove-Item -force
     dir $aliasfilename | Remove-Item -force
     dir $temp1 | Remove-Item -force
     dir $temp2 | Remove-Item -force
+
+    Foreach ($file in $tempfiles)
+    {
+        dir $file | Remove-Item -force
+    }
     
     return $result | ConvertTo-Json
 }
