@@ -57,6 +57,7 @@ function getContactInfo
             $JSON = @{AccountAlias = $AccountAlias; Location = $i} | ConvertTo-Json 
             $response = Invoke-RestMethod -uri "https://api.ctl.io/REST/Server/GetAllServersForAccountHierarchy/" -ContentType "Application/JSON" -Method Post -WebSession $session -Body $JSON -errorAction stop
             $allAliases += $response.AccountServers
+
         }
 
         if ($allAliases)
@@ -71,6 +72,7 @@ function getContactInfo
 
         # Iterate through account aliases and get account info
 
+        $adminsExist = $false
         $counter = 1
         $output = $null
         Foreach ($alias in $allAliases)
@@ -97,7 +99,11 @@ function getContactInfo
 
             if ($targetUsers -eq $null)
             {
-                $output = "No Acccount Administrators on file."
+                #$output += "Account $alias has no Acccount Administrators on file. `n"
+            }
+            else
+            {
+                $adminsExist = $true
             }
 
             Foreach ($i in $targetUsers)
@@ -128,12 +134,15 @@ function getContactInfo
                     $title = "No title on file"
                 }
                 $title = "$title."
-                $output += "$counter. Name: $first $last | E-mail: $email | Phone number: $phone | Title: $title `n"
+                $output += "$counter. Name: $first $last | E-mail: $email | Phone number: $phone | Title: $title | Account alias: $alias`n"
                 $counter++
             }
         } # End foreach account alias
-        
-        $result.output = "Account alias *$($accountAlias)* has the following account administrator(s):`n ``````$output`````` Business name: *$($parentBusinessName)* | Billing phone number: *$($parentphone)*."
+        if($adminsExist -eq $false)
+        {
+            $output = "Account $Accountalias has no Acccount Administrators on file. "
+        }
+        $result.output = "Account alias *$($accountAlias)* has the following account administrator(s):`n $output Business name: *$($parentBusinessName)* | Billing phone number: *$($parentphone)*."
 
         $result.success = $true
     }
