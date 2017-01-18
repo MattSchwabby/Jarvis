@@ -83,6 +83,12 @@ function getContactInfo
             $telephone = $accountInfo.AccountDetails.Telephone
             $businessName = $accountInfo.AccountDetails.BusinessName
 
+            if($counter -eq 1)
+            {
+                $parentBusinessName = $businessname
+                $parentphone = $telephone
+                $parentlocation = $location
+            }
             # Get users
             $JSON = @{AccountAlias = $alias} | ConvertTo-Json 
             $response = Invoke-RestMethod -uri "https://api.ctl.io/REST/User/GetUsers/" -ContentType "Application/JSON" -Method Post -WebSession $session -Body $JSON
@@ -127,7 +133,7 @@ function getContactInfo
             }
         } # End foreach account alias
         
-        $result.output = "Account alias *$($alias)* has the following account administrator(s):`n ``````$output`````` Business name: *$($businessName)* | Billing phone number: *$($telephone)*."
+        $result.output = "Account alias *$($accountAlias)* has the following account administrator(s):`n ``````$output`````` Business name: *$($parentBusinessName)* | Billing phone number: *$($parentphone)*."
 
         $result.success = $true
     }
