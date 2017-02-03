@@ -13,7 +13,7 @@ executePowerShell = edge.func('ps', -> ###
   . .\scripts\getCurrentCustomers.ps1
   # Edge.js passes an object to PowerShell as a variable - $inputFromJS
   # This object is built in CoffeeScript on line 28 below
-  getInventory -dataCenter $inputFromJS.dataCenter -email $inputFromJS.emailName
+  getCurrentCustomers -dataCenter $inputFromJS.dataCenter -email $inputFromJS.emailName
 ###
 )
 
