@@ -290,6 +290,14 @@ function getInventory
                         {
                             $thisOS = "CentOS 7"
                         }
+                        if ($thisOS -eq 48)
+                        {
+                            $thisOS = "Ubuntu 16 64-bit"
+                        }
+                        if ($thisOS -eq 49)
+                        {
+                            $thisOS = "Windows 2016 Datacenter 64-Bit"
+                        }
                         $thisDNS = $k.DnsName
                         $thisStatus = $k.Status
                         $thisPower = $k.PowerState
