@@ -7,16 +7,13 @@
     Matt Schwabenbauer
     Matt.Schwabenbauer@ctl.io
 .Example
-    getCurrentCustomers -datacenter VA1 -email Matt.Schwabenbauer@ctl.io
+    getAllCurrentCustomers -email Matt.Schwabenbauer@ctl.io
 #>
-function getCurrentCustomers
+function getAllCurrentCustomers
 {
     [CmdletBinding()]
     Param
     (
-        # Customer Alias
-        [Parameter(Mandatory=$true)]
-        $datacenter,
         [Parameter(Mandatory=$true)]
         $email
     )
@@ -40,39 +37,13 @@ try
     $seconds = get-date -Format ss
 
     $currentDateTime = "$day-$month-$date-$year-$hour-$minutes-$seconds"
-    $filename = "c:\users\public\$datacenter-AllCustomers-$currentDateTime.csv"
+    $filename = "c:\users\public\CenturyLinkCloud-AllCustomers-$currentDateTime.csv"
 
     # Log in to consumption api
     $HeaderValue = loginConsumptionApi
 
-    # Create variable for data centers
-
-    $DCURL = "https://api.ctl.io/v2/datacenters/CTLX"
-    $datacenterList = Invoke-RestMethod -Uri $DCURL -ContentType "Application/JSON" -Headers $HeaderValue -Method Get
-    $datacenterList = $datacenterList.id
-    $datacenterString = ""
-    foreach($dc in $datacenterlist)
-    {
-        $datacenterString += "$dc "
-    }
-
-    $accurateDataCenter = $false
-    foreach($dc in $datacenterList)
-    {
-        if($dc -eq $datacenter)
-        {
-            $accurateDataCenter = $true
-        }
-    }
-
-    if(!$accurateDataCenter)
-    {
-        $errorcode = 1
-        #fail the script
-        stop
-    }
-
-     <#===============================
+    
+    <#===============================
     Find latest consumption data
     ================================#>
     $currentMonth = get-date -Format MM
@@ -82,12 +53,18 @@ try
 
     try
     {
-        $response = Invoke-RestMethod -Uri $URL -Headers $HeaderValue -Method Get -timeoutSec 600
+        $response = Invoke-RestMethod -Uri $URL -Headers $HeaderValue -Method Get
     }
     catch
     {
         stop
     }
+    
+    # Create variable for data centers
+
+    $DCURL = "https://api.ctl.io/v2/datacenters/CTLX"
+    $datacenterList = Invoke-RestMethod -Uri $DCURL -ContentType "Application/JSON" -Headers $HeaderValue -Method Get
+    $datacenterList = $datacenterList.id
 
     $day = get-date -Format ddd
     $month = get-date -Format MMM
@@ -106,9 +83,8 @@ try
 
     $consumption = $consumption | where-object {$_.Status -eq "Active"}
     $consumption = $consumption | where-object {$_.Type -eq "Billable" -or $_.Type -eq "Reseller"}
-    $consumption = $consumption | where-object {$_.Location -eq $datacenter}
 
-    $aliases = $consumption."Root Alias"
+    $aliases = $consumption."Alias"
     $aliases = $aliases | select -Unique
     
     # Log in to V1 API
@@ -142,7 +118,7 @@ try
     $PWord = loginCLCSMTP
     $Credential = New-Object –TypeName System.Management.Automation.PSCredential –ArgumentList $User, $PWord
 
-    $EmailBody = "Attached is a CenturyLink Cloud Customer List for $datacenter generated on $month $day, $year. $customerCount customers found.
+    $EmailBody = "Attached is a CenturyLink Cloud Customer List generated on $month $day, $year. $customerCount customers found.
 
     Summary:
     
@@ -150,9 +126,9 @@ try
 
         "
 
-    Send-MailMessage -To $EmailTo -From $EmailFrom -Subject "CenturyLink Cloud Customer List for $datacenter" -Body $EmailBody -SmtpServer $SmtpServer -Port 25 -Credential $Credential -Attachments $filename
+    Send-MailMessage -To $EmailTo -From $EmailFrom -Subject "CenturyLink Cloud Customer List" -Body $EmailBody -SmtpServer $SmtpServer -Port 25 -Credential $Credential -Attachments $filename
             
-    $result.output = "CenturyLink Cloud Customer List for *$($datacenter)* has been emailed to *$($email)*`. *$($customerCount)* customers were found."
+    $result.output = "CenturyLink Cloud Customer List has been emailed to *$($email)*`. *$($customerCount)* customers were found."
         
     $result.success = $true
 
@@ -163,11 +139,11 @@ try
     {
         if ($errorcode -eq 1)
         {
-            $result.output = "You entered an invalid data center. Please retry with one of the following: $datacenterString"
+            $result.output = "Operation failed."
         }
         else
         {
-            $result.output = "Failed to generate a customer list for *$($datacenter)*."
+            $result.output = "Failed to generate a customer list."
         }
         
             $result.success = $false

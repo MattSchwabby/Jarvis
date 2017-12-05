@@ -34,7 +34,7 @@ function customerSearch
     # Use try/catch block            
     try
     {
-        $query = "SELECT * FROM consumption.customers WHERE customer_name LIKE '%$($customerQuery)%' LIMIT 1
+        $query = "SELECT * FROM consumption.customers WHERE customer_name LIKE '%$($customerQuery)%' ORDER BY valid_as_of DESC LIMIT 1
         ;"
         
         try
