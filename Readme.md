@@ -2,11 +2,11 @@
 
 Code repository for Slack bot functionality that facilitates CenturyLink Cloud customer reporting.
 
-Author: Matt Schwabenbauer
+Author: Matt Schwabenbauer, Praveen Kumar
 
-Date: September 27, 2016
+Date: November 16, 2018
 
-Matt.Schwabenbauer@ctl.io
+praveen.kumar1@centurylink.com
 
 ### About this repository
 
@@ -33,7 +33,7 @@ Jarvis's instance for the CTL Slack workspace (ctl-connected.slack.com)is hosted
 These machines are Windows Server VMs and their IP Addresses and login credentials can be found on control.ctl.io
 The scripts to Start and Restart Jarvis can be found on the Desktop of the respective machines. 
 
-VPN Requirements:
+### VPN Requirements:
 
 To access these servers, a VPN connection to UC1 is required. To connect to a Windows server hosting Jarvis, find out its IP address from control.
 Then on your local machine add a route to for the Windows server like this:
@@ -60,6 +60,4 @@ The encoded credentials are stored in a JSON file at C:\Users\Administrator\JK\c
 
 ### Support
 
-This code is presented as is and is open to contribution from the community.
-
-Feature requests and enhancements can be suggested to Matt.Schwabenbauer@ctl.io. Any future development is not guaranteed.
+Feature requests and enhancements can be suggested to joseph.nguyen@centurylink.com. Any future development is not guaranteed.
