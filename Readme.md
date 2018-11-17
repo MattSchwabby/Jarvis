@@ -22,13 +22,41 @@ There is a known issue where the CoffeeScript commands become unable to execute 
 
 Each of the scripts and modules included in the PoshHubot PowerShell module will need to be unblocked on the system running the Jarvis Hubot. I recommend unblocking the entire directory using the Unblock-Item PowerShell command.
 
-I plan to eventually create automation to provision an instance of Jarvis, or create a fork of the PoshHubot repository with the Jarvis functionality included.
+Future plan: Eventually create automation to provision an instance of Jarvis, or create a fork of the PoshHubot repository with the Jarvis functionality included.
+
+### Current Deployment
+
+Jarvis's instance for the CenturyLink Cloud Slack Workspace (cl-cloud.slack.com) is hosted on UC1MSCHJARVIS01. This slack workspace is on the Standard Slack plan.
+
+Jarvis's instance for the CTL Slack workspace (ctl-connected.slack.com)is hosted on UC1MSCHJARCTL03. This slack workspace is on the Free Slack plan.
+
+These machines are Windows Server VMs and their IP Addresses and login credentials can be found on control.ctl.io
+The scripts to Start and Restart Jarvis can be found on the Desktop of the respective machines. 
+
+VPN Requirements:
+
+To access these servers, a VPN connection to UC1 is required. To connect to a Windows server hosting Jarvis, find out its IP address from control.
+Then on your local machine add a route to for the Windows server like this:
+
+$ sudo route add <subnet-windows-machine> <tunnel IP>
+
+e.g. if the Windows server IP is 10.140.141.33, and the tunnel IP is 10.255.124.11, the command will be:
+
+$ sudo route add 10.140.141.0/24 10.255.124.11
+
 
 ### Authentication
 
 The beginning of each script calls two login functions for the CenturyLink Cloud APIs. I have not included those functions here for security reasons. Replacement functionality could be easily created by reviewing the CenturyLink Cloud API docs here: https://www.ctl.io/api-docs/v2/.
 
 Your SMTP Relay alias will be specified in the individual PowerShell scripts that call for it. I have also secured my SMTP relay password via a PowerShell function, but that can be directly replaced with a string or object containing your password.
+
+The functions for authentication are defined in a PowerShell module under C:\Windows\System32\WindowsPowerShell\v1.0\Modules\loginCLCAPI\loginCLCAPI.psm1
+This module defines functions to authenticate to V1 and V2 control APIs.
+
+The credentials for both V1 and V2 are encoded using a standard PowerShell module ConvertTo-SecureString (https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/convertto-securestring?view=powershell-6)
+The encoded credentials are stored in a JSON file at C:\Users\Administrator\JK\config.json
+
 
 ### Support
 
