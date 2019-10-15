@@ -124,7 +124,7 @@ function showMeTheMoney
         $secs = get-date -Uformat %S
         $date = "$month-$day-$year"
         $tempDate = "$month-$day-$year-$hours-$mins-$secs"
-        $filename = "C:\users\public\clc\$alias-RevenueDetails-InvoiceDate-$usagemonth-$usageyear-PricingDate-$pricingmonth-$pricingyear-IncludeSubs-$includesubs-Generated-$date.csv"
+        $filename = "C:\users\public\CLC\$alias-RevenueDetails-InvoiceDate-$usagemonth-$usageyear-PricingDate-$pricingmonth-$pricingyear-IncludeSubs-$includesubs-Generated-$date.csv"
         $tempFileName = "C:\Users\Public\CLC\$alias-RevenueDetails-temp-generated-$tempDate.txt"
 
         $inputPricingMonth = $pricingMonth
@@ -245,6 +245,10 @@ function showMeTheMoney
     }
     
    
+    # Delete temp files
+    dir $filename | Remove-Item -force
+    dir $tempFileName | Remove-Item -force
+
     # Return the result and convert it to json
 
     return $result | ConvertTo-Json

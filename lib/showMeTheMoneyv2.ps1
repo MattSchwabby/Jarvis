@@ -56,7 +56,7 @@ function showMeTheMoneyv2
         $secs = get-date -Uformat %S
         $date = "$month-$day-$year"
         $tempDate = "$month-$day-$year-$hours-$mins-$secs"
-        $filename = "C:\users\public\clc\$alias-RevenueDetails-InvoiceDate-$invoiceMonth-$invoiceYear-Generated-$date.csv"
+        $filename = "C:\users\public\CLC\$alias-RevenueDetails-InvoiceDate-$invoiceMonth-$invoiceYear-Generated-$date.csv"
         $tempFileName = "C:\Users\Public\CLC\$alias-RevenueDetails-temp-generated-$tempDate.txt"
 
         try

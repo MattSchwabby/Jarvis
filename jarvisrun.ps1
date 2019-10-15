@@ -309,33 +309,35 @@ switch($currentCommand){
      $alias = $incomingText[2+$offset].Trim()
      $start = $incomingText[3+$offset].Trim()
      $end = $incomingText[4+$offset].Trim()
-     $reseller= $incomingText[5+$offset].Trim()
+     $reseller= $incomingText[5+$offset]
      $email = $incomingText[6+$offset].Trim()
      New-TeamsMessage -Text "Requesting a consumption report for customer $alias with a start date $start and an end date $end with a reseller toggle $reseller and send it to the email address $email..." -Team 'Development Sandbox' -Channel 'Testing' -ConversationId $jsonMessage.conversation.id
      $resultMessage = doPrettyPrint (getConsumptionReport -alias $alias  -start $start -end $end -reseller $reseller -email $email);
      New-TeamsMessage -Text $resultMessage -Team 'Development Sandbox' -Channel 'Testing' -ConversationId $jsonMessage.conversation.id}
 
-   {$currentCommand -Match "help"} {New-TeamsMessage -Text "@jarvis account info <alias> - Returns the MRR, server count, support level, home data center, business name, number of sub accounts and compute resource consumption for a given account alias (server count includes templates and machines that are powered off).`n
-@jarvis bare metal - Returns the available Bare Metal SKUs in each data center, as well as the remaining available amounts..`n
-@jarvis contact info <alias> - Returns a list of account administrators containing names, email addresses, phone numbers and titles for a given account alias.`n
-@jarvis cross dcs <alias> - returns the cross data center connectivity for all accounts rolling up to a given parent alias.`n
-@jarvis customer search <search query> (example: @jarvis customer search P&G - Search for a customer account alias by company name.`n
-@jarvis customers <data center> <email> (example: @jarvis customers VA1 Matt.Schwabenbauer@ctl.io - Sends the requester a list of customers for a given CLC data center to a given e-mail address.`n
-@jarvis dcs <alias> - Returns the data center footprint of the given account alias.`n
-@jarvis estimate mrr <alias> - Returns the estimated MRR and month to date billing figure of a given account alias.`n
-@jarvis inventory <alias> <email> - Emails the requester a server inventory rolling up all sub accounts to a given parent alias (includes templates and machines that are powered off).`n
-@jarvis invoice <alias> <month (ex: 03)> <year (ex: 2016)> <email> - Emails the requester a usage invoice for a given account alias, month and year. (Note: This data is pulled directly from the API and has not been processed through BRM or Vantive).`n
-@jarvis mrr <alias> - Returns the most recent MRR for a given account alias. Will display a chart breaking down the spend per data center (Note: This data is pulled from the API and has not processed through BRM or Vantive).`n
-@jarvis parents <alias> - Returns a list of parent accounts for the given alias.`n
-@jarvis resource limits <alias> - Returns the aggregate consumed resources in a given account alias vs the limits set at the account level in the Platform.`n
-@jarvis server count <alias> - Returns the amount of servers in a given account alias (includes templates and machines that are powered off).`n
-@jarvis subs <alias> - Returns a list of sub accounts for the given alias.`n
-@jarvis support level <alias> - Returns the support level for a given account alias (does not analyze sub accounts).`n
-@jarvis utilization report <alias> <email> - Emails the requester a two week CenturyLink Cloud utilization report for a given account alias - rolls up all sub accounts (does not include machines that are powered off or templates).`n
-@jarvis report <alias> <invoiceMonth (ex: 06)> <invoiceYear (ex: 2016)> <email> - Returns a revenue report for account alias for the invoice month and yearto be e-mailed.`n
-@jarvis specify pricing <alias> <usage month (ex. 06)> <usage year (ex. 2016)> <pricing month (ex. 12)> <pricing year (ex. 2016)> <sub accounts (y/n)> <email> - Returns a revenue report for account alias with usage from usageMonth usageYear and pricing from pricingMonth pricingYear with a subaccount toggle of includeSubs to be e-mailed.`n
-@jarvis consumption report <alias> <start date (ex. 2016-10-01)> <end date (ex. 2016-11-01)> <reseller toggle (y/n)> <e-mail (ex. Matt.Schwabenbauer@ctl.io)> - Returns a consumption report for customer alias with a start date and an end date  with a reseller toggle to be emailed. `n
-@jarvis help - Displays all of the commands that Jarvis knows about." -Team 'Development Sandbox' -Channel 'Testing' -ConversationId $jsonMessage.conversation.id}
+   {$currentCommand -Match "help"} {
+   $grave = [char]0x0060
+   New-TeamsMessage -Text "$grave @jarvis account info <alias> $grave - Returns the MRR, server count, support level, home data center, business name, number of sub accounts and compute resource consumption for a given account alias (server count includes templates and machines that are powered off).`n
+$grave @jarvis bare metal $grave - Returns the available Bare Metal SKUs in each data center, as well as the remaining available amounts..`n
+$grave @jarvis contact info <alias> $grave - Returns a list of account administrators containing names, email addresses, phone numbers and titles for a given account alias.`n
+$grave @jarvis cross dcs <alias> $grave- returns the cross data center connectivity for all accounts rolling up to a given parent alias.`n
+$grave @jarvis customer search <search query> (example: @jarvis customer search P&G) $grave- Search for a customer account alias by company name.`n
+$grave @jarvis customers <data center> <email> (example: @jarvis customers VA1 trevor.huff@ctl.io) $grave- Sends the requester a list of customers for a given CLC data center to a given e-mail address.`n
+$grave @jarvis dcs <alias> $grave- Returns the data center footprint of the given account alias.`n
+$grave @jarvis estimate mrr <alias> $grave- Returns the estimated MRR and month to date billing figure of a given account alias.`n
+$grave @jarvis inventory <alias> <email> $grave- Emails the requester a server inventory rolling up all sub accounts to a given parent alias (includes templates and machines that are powered off).`n
+$grave @jarvis invoice <alias> <month (ex: 03)> <year (ex: 2016)> <email> $grave- Emails the requester a usage invoice for a given account alias, month and year. (Note: This data is pulled directly from the API and has not been processed through BRM or Vantive).`n
+$grave @jarvis mrr <alias> $grave- Returns the most recent MRR for a given account alias. Will display a chart breaking down the spend per data center (Note: This data is pulled from the API and has not processed through BRM or Vantive).`n
+$grave @jarvis parents <alias> $grave- Returns a list of parent accounts for the given alias.`n
+$grave @jarvis resource limits <alias> $grave- Returns the aggregate consumed resources in a given account alias vs the limits set at the account level in the Platform.`n
+$grave @jarvis server count <alias> $grave- Returns the amount of servers in a given account alias (includes templates and machines that are powered off).`n
+$grave @jarvis subs <alias> $grave- Returns a list of sub accounts for the given alias.`n
+$grave @jarvis support level <alias> $grave- Returns the support level for a given account alias (does not analyze sub accounts).`n
+$grave @jarvis utilization report <alias> <email> - Emails the requester a two week CenturyLink Cloud utilization report for a given account alias $grave- rolls up all sub accounts (does not include machines that are powered off or templates).`n
+$grave @jarvis report <alias> <invoiceMonth (ex: 06)> <invoiceYear (ex: 2016)> <email> $grave- Returns a revenue report for account alias for the invoice month and yearto be e-mailed.`n
+$grave @jarvis specify pricing <alias> <usage month (ex. 06)> <usage year (ex. 2016)> <pricing month (ex. 12)> <pricing year (ex. 2016)> <sub accounts (y/n)> <email> $grave- Returns a revenue report for account alias with usage from usageMonth usageYear and pricing from pricingMonth pricingYear with a subaccount toggle of includeSubs to be e-mailed.`n
+$grave @jarvis consumption report <alias> <start date (ex. 2016-10-01)> <end date (ex. 2016-11-01)> <reseller toggle (y/n)> <e-mail (ex. trevor.huff@ctl.io)> $grave- Returns a consumption report for customer alias with a start date and an end date  with a reseller toggle to be emailed. `n
+$grave @jarvis help $grave- Displays all of the commands that Jarvis knows about." -Team 'Development Sandbox' -Channel 'Testing' -ConversationId $jsonMessage.conversation.id}
    default { New-TeamsMessage -Text "Sorry I don't understand that command." -Team 'Development Sandbox' -Channel 'Testing' -ConversationId $jsonMessage.conversation.id }
 }}catch{Write-Output "crashed"
 Write-Output $ErrorMessage = $_.Exception.Message}
