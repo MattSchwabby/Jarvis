@@ -7,7 +7,7 @@
     Matt Schwabenbauer
     Matt.Schwabenbauer@ctl.io
 .Example
-    customerSearch -query 'Coca Cola'
+    customerSearch -customerQuery 'Coca Cola'
 #>
 function customerSearch
 {

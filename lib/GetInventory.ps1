@@ -61,7 +61,7 @@ function getInventory
         $datacenterList = Invoke-RestMethod -Uri $DCURL -ContentType "Application/JSON" -Headers $HeaderValue -Method Get
         $datacenterList = $datacenterList.id
         $date = Get-Date -Format Y
-        $filename = "g:\CustomerServerData\$AccountAlias-AllServers-$date.csv"
+        $filename = "c:\CustomerServerData\$AccountAlias-AllServers-$date.csv"
 
         Foreach ($i in $datacenterList)
         {
