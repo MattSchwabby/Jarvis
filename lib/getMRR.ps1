@@ -132,7 +132,7 @@ function getMRR
             $stringOut += "$l : $s`n"
         }
 
-        $result.output = "``````DC  : MRR`n==================`n$stringOut`````` `n Alias *$($alias)* had $*$($mrr)* MRR last month."
+        $result.output = "`DC  : MRR` `n==================`n ``$stringOut`` `n Alias *$($alias)* had $*$($mrr)* MRR last month."
         
         $result.success = $true
     }
