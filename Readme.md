@@ -2,33 +2,28 @@
 
 Code repository for Slack bot functionality that facilitates CenturyLink Cloud customer reporting.
 
-Author: Matt Schwabenbauer, Praveen Kumar
+Author: Matt Schwabenbauer, Praveen Kumar, Trevor Huff
 
 Date: November 16, 2018
-
-praveen.kumar1@centurylink.com
+Updated: October 14, 2019
 
 ### About this repository
 
 This repository was created to give CenturyLink personnel the ability to quickly access account data for a given customer account alias.
 
-For any given piece of functionality there are two files, a PowerShell script and a CofeeScript file. Any interaction with the CenturyLink Cloud APIs or parsing of data is done in a PowerShell script that is called by a CoffeeScript file, which also contains the parameters to trigger any functionality from the Hubot listener.
+For any given piece of functionality there are two files, a PowerShell script and a CofeeScript file. Any interaction with the CenturyLink Cloud APIs or parsing of data is done in a PowerShell script, which also contains the parameters to trigger any functionality from the Hubot listener.
 
 ### Deploying Jarvis
 
 This respository is meant to be synced with the local script repository of a PoshHubot instance that has already been deployed. Instructions for deploying a PoshHubot instance can be found here: https://github.com/MattHodge/PoshHubot. I recommend removing every external script from the external-scripts.json file that will be created during the Hubot installation, with the exception of the entry for "hubot-help".
 
-There is a known issue where the CoffeeScript commands become unable to execute PowerShell commands after a long period of time. This can be worked around by creating a service for Jarvis using NSSM (https://nssm.cc/). A service with administrator privileges that calls Start-Hubot will ensure the service is always available for the user.
-
-Each of the scripts and modules included in the PoshHubot PowerShell module will need to be unblocked on the system running the Jarvis Hubot. I recommend unblocking the entire directory using the Unblock-Item PowerShell command.
+Update: You can now just run the "jarvisrun.ps1" script. There are a few hardcoded directories like in the authentication script you will need to create.
 
 Future plan: Eventually create automation to provision an instance of Jarvis, or create a fork of the PoshHubot repository with the Jarvis functionality included.
 
 ### Current Deployment
 
-Jarvis's instance for the CenturyLink Cloud Slack Workspace (cl-cloud.slack.com) is hosted on UC1MSCHJARVIS01. This slack workspace is on the Standard Slack plan.
-
-Jarvis's instance for the CTL Slack workspace (ctl-connected.slack.com)is hosted on UC1MSCHJARCTL03. This slack workspace is on the Free Slack plan.
+Jarvis's instance for the CenturyLink Cloud Teams workspace is hosted on UC1T3NJARVIS01. This slack workspace is on the Standard Slack plan.
 
 These machines are Windows Server VMs and their IP Addresses and login credentials can be found on control.ctl.io
 The scripts to Start and Restart Jarvis can be found on the Desktop of the respective machines. 
@@ -60,4 +55,4 @@ The encoded credentials are stored in a JSON file at C:\Users\Administrator\JK\c
 
 ### Support
 
-Feature requests and enhancements can be suggested to joseph.nguyen@centurylink.com. Any future development is not guaranteed.
+Feature requests and enhancements can be suggested to trevor.huff@centurylink.com. Any future development is not guaranteed.
