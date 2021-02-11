@@ -180,15 +180,13 @@ function showMeTheMoney
         try
         {
            #email the spreadsheet
-           $User = 'a175c1c3db8f444804331808510f6456'
-            $SmtpServer = "in-v3.mailjet.com"
+           $User = 'platform-team@ctl.io'
+            $SmtpServer = "smtp.dynect.net"
             $EmailFrom = "CenturyLink Cloud revenue details for $alias Jarvis <jarvis@ctl.io>"
             #$User = "MSCH1-relay@t3mx.com"
             #$SmtpServer = "relay.t3mx.com"
             #$EmailFrom = "CenturyLink Cloud revenue details for $alias <MSCH1-relay@t3mx.com>"
             $EmailTo = "<$email>"
-            #$PWordString = ''
-            #$PWord = $PWordString | ConvertTo-SecureString
             $PWord = loginCLCSMTP
 
             $Credential = New-Object –TypeName System.Management.Automation.PSCredential –ArgumentList $User, $PWord

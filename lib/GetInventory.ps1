@@ -298,6 +298,15 @@ function getInventory
                         {
                             $thisOS = "Windows 2016 Datacenter 64-Bit"
                         }
+                        if ($thisOS -eq 50)
+                        {
+                            $thisOS = "Ubuntu 18 64-bit"
+                        }
+                        if ($thisOS -eq 51)
+                        {
+                            $thisOS = "Windows 2019 Datacenter 64-Bit"
+                        }
+
                         $thisDNS = $k.DnsName
                         $thisStatus = $k.Status
                         $thisPower = $k.PowerState
@@ -374,8 +383,8 @@ function getInventory
         $global:session = $session
 
         #email the spreadsheet
-        $User = 'a175c1c3db8f444804331808510f6456'
-        $SmtpServer = "in-v3.mailjet.com"
+        $User = 'platform-team@ctl.io'
+        $SmtpServer = "smtp.dynect.net"
         $EmailFrom = "Jarvis <jarvis@ctl.io>"
         $EmailTo = "<$email>"
         $PWord = loginCLCSMTP

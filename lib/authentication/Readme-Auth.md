@@ -21,7 +21,7 @@ This module defines functions to authenticate to V1 and V2 control APIs.
 
 The credentials for both V1 and V2 are encoded using a standard PowerShell module ConvertTo-SecureString (https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/convertto-securestring?view=powershell-6)
 The encoded credentials should be stored in a file named config.json in the following JSON format:
-```
+
 {
     "JK1": "<API Key for Control API V1 authentication>",
     "JK2": "<Encoded password for Control API V1 authentication>",
@@ -31,13 +31,12 @@ The encoded credentials should be stored in a file named config.json in the foll
     "JK6": "<Consumption API Username>",
     "JK7": "<Encoded password for Consumption API>",
     "JK8": "<Encoded password for Consumtion DB>",
-    "JK9": "<Encoded connection string for teams bot"
     "BM1": "<Forecast username>",
     "BM2": "<Forecast password>",
     "BM3": "<>",
     "BM4": "<>"
 }
-```
-For Jarvis, only JK1, JK2, JK3, JK4 and JK9 values are relevant.
+
+For Jarvis, only JK1, JK2, JK3 and JK4 values are relevant.
 
 This config.json file should be deployed at C:\Users\Administrator\JK\config.json

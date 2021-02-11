@@ -164,8 +164,7 @@ function currentRevenue
             $SmtpServer = "relay.t3mx.com"
             $EmailFrom = "CenturyLink Cloud revenue details for $alias <MSCH1-relay@t3mx.com>"
             $EmailTo = "<$email>"
-            $PWordString = '01000000d08c9ddf0115d1118c7a00c04fc297eb0100000089d531f69fb95240a5ffcf68f50c9ff400000000020000000000106600000001000020000000bc98ff7df27dfdfe1a5e0110b9164ca545ac8461e006d870e81207f21349a03e000000000e80000000020000200000000fb4ef1d20a3bdb3d8067abc88563fa26b3c6ae134992af9b288937023e4d292300000007d5eaf859b58310716c84921623133c0b0612aad62768b42932a84c0f6c77fa6128357ae94db4f96a3f21c89481312f0400000003797c7fb64f9e0dc93da8c01046780c12af86621f328740189cd88889406f45fdf4bb56b69e7ad4c9ec827dc7ca7ca6c074e2e8b9b858bc37ab1e7d21c40cc29'
-            $PWord = $PWordString | ConvertTo-SecureString
+            $PWord = loginCLCSMTP
 
             $Credential = New-Object –TypeName System.Management.Automation.PSCredential –ArgumentList $User, $PWord
 

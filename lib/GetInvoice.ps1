@@ -168,8 +168,8 @@ function getInvoice
         import-csv $billtmp4 | export-csv $filename -NoTypeInformation
 
         # Email the spreadsheet
-        $User = 'a175c1c3db8f444804331808510f6456'
-        $SmtpServer = "in-v3.mailjet.com"
+        $User = 'platform-team@ctl.io'
+        $SmtpServer = "smtp.dynect.net"
         $EmailFrom = "Jarvis <jarvis@ctl.io>"
         $EmailTo = "<$email>"
         $PWord = loginCLCSMTP

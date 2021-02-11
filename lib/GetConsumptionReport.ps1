@@ -32,13 +32,13 @@ function getConsumptionReport
     # Create a hashtable for the results
     $result = @{}
     $errorcode = $null
-    
+
     # Use try/catch block            
     try
     {
         #check formatting of input
         $dateCheck = NEW-TIMESPAN -start $start -end $end
-        if ($dateCheck.days -gt 31)
+        if ($dateCheck.days -gt 3650)
         {
             # fail the script
             $errorcode = 1
@@ -67,11 +67,11 @@ function getConsumptionReport
 
         if ($reseller -eq "y")
         {
-            $username = "Matt.Schwabenbauer.ctlz"
+            $username = "jarvis.ctlz"
         }
         elseif ($reseller -eq "n")
         {
-            $username = "Matt.Schwabenbauer.ctlx"
+            $username = "jarvis.ctlx"
         }
         else
         {
@@ -166,22 +166,25 @@ function getConsumptionReport
   try
         {
            #email the spreadsheet
-            $User = "a175c1c3db8f444804331808510f6456"
-            $SmtpServer = "in-v3.mailjet.com"
+            #$User = "a175c1c3db8f444804331808510f6456"
+            #$SmtpServer = "in-v3.mailjet.com"
+            $User = 'platform-team@ctl.io'
+            $SmtpServer = "smtp.dynect.net"
+            $PWord = loginCLCSMTP
+
             $EmailFrom = "CenturyLink Cloud revenue details for $alias <jarvis@ctl.io>"
             $EmailTo = "<$email>"
-            $PWordString = '01000000d08c9ddf0115d1118c7a00c04fc297eb0100000097837655e9aa9c47a12bc3b2aaafa39e00000000020000000000106600000001000020000000301ea6259354141810b75a8e988b1c6af281c6b910e78577b92541cd89f62364000000000e8000000002000020000000d00bb2888efc6781afa1febab6c79f383f83f69618042439cbae145ce0d7bbc650000000abea9fe05aa8fd6135000af338d482d030ba5b2dc7a2de7c0d774498fd1c3264858613f6241b261c18fba08df61ac67f5ed53c84005b2e16c1227c1ed6e7eef1743916a5892881fb24c65044d74de35f40000000fdba8fe494b0ea9f035bf78770af04f7a2665e4f32425777c36a6284dc545f8075eab2a2cd29f5e3f40efa50e32010f9a6590ae2c1bbe87c45a02633a40a84a2'
-            $PWord = $PWordString | ConvertTo-SecureString
-
+            
             $Credential = New-Object –TypeName System.Management.Automation.PSCredential –ArgumentList $User, $PWord
 
-            $EmailBody = "Attached is a CenturyLink Cloud revenue report for $alias with and invoice month of $invoicemonth and year of $invoiceyear."
+            $EmailBody = "Attached is a CenturyLink Cloud revenue report for $alias."
 
             Send-MailMessage -To $EmailTo -From $EmailFrom -Subject "CenturyLink Cloud Revenue Report for the sub account $alias" -Body $EmailBody -SmtpServer $SmtpServer -Port 25 -Credential $Credential -Attachments $filename
         }
         catch
         {
-            $errorcode = 5
+            $errorcode = 7
+            $errorReason = $_
             stop
         }
             
@@ -195,11 +198,11 @@ function getConsumptionReport
     {
         if ($errorcode -eq 1)
         {
-            $result.output = "The dates you specified are greater than a month apart. I told you to limit your searches to one month, you donkey!"
+            $result.output = "The dates you specified are greater than 10 years."
         }
         elseif ($errorcode -eq 2)
         {
-            $result.output = "You entered an account alias that was either too long or too short. Do better next time."
+            $result.output = "You entered an account alias that was either too long or too short."
         }
         elseif ($errorcode -eq 3)
         {
@@ -211,15 +214,19 @@ function getConsumptionReport
         }
         elseif ($errorcode -eq 5)
         {
-        $result.output = "You did not specify Y or N for the reseller input. You should feel bad, that is a pretty easy thing to do and you really messed it up."
+        $result.output = "You did not specify Y or N for the reseller input."
         }
         elseif ($errorcode -eq 6)
         {
-            $result.output = "Whoops! You didn't enter an e-mail address."
+            $result.output = "You didn't enter an e-mail address."
+        }
+        elseif ($errorcode -eq 7)
+        {
+            $result.output = "Failed to email the report: $errorReason"
         }
         else
         {
-            $result.output = "Failed to generate a consumption report for $($AccountAlias)."
+            $result.output = "Failed to generate a consumption report for $($AccountAlias): $_"
         }
         
         # Set a failed result

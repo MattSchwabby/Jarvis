@@ -111,8 +111,8 @@ try
 
     # E-mail the report
 
-    $User = 'a175c1c3db8f444804331808510f6456'
-    $SmtpServer = "in-v3.mailjet.com"
+    $User = 'platform-team@ctl.io'
+    $SmtpServer = "smtp.dynect.net"
     $EmailFrom = "Jarvis <jarvis@ctl.io>"
     $EmailTo = "<$email>"
     $PWord = loginCLCSMTP
